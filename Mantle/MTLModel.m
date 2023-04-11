@@ -303,8 +303,11 @@ static BOOL MTLValidateAndSetValue(id obj, NSString *key, id value, BOOL forceUp
 #pragma mark NSObject
 
 - (NSString *)description {
-	NSDictionary *permanentProperties = [self dictionaryWithValuesForKeys:self.class.permanentPropertyKeys.allObjects];
-
+	NSMutableDictionary *permanentProperties = [self dictionaryWithValuesForKeys:self.class.permanentPropertyKeys.allObjects].mutableCopy;
+	[permanentProperties removeObjectForKey:@"accessToken"];
+	[permanentProperties removeObjectForKey:@"password"];
+	[permanentProperties removeObjectForKey:@"avatarURL"];
+	[permanentProperties removeObjectForKey:@"avatarData"];
 	return [NSString stringWithFormat:@"<%@: %p> %@", self.class, self, permanentProperties];
 }
 
